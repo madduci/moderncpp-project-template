@@ -16,6 +16,7 @@ This repository aims to represent a template for Modern C++ projects, including 
 
 The repository follows the required files and folders as suggested in `conan_package_tools` documentation, with a folder dedicated to the source code and another one dedicated to testing the package as redistributable library, in case you are developing a library:
 
+```plain
 -- conanfile.py      - the main `conan` configuration file
 -- build.py          - python script to launch the `conan_package_tools` tests
 -- .dockerignore     - files to be excluded by Docker
@@ -32,6 +33,7 @@ The repository follows the required files and folders as suggested in `conan_pac
   | -- conanfile.py
   | -- usage_hello.cpp
 +- `build/`          - working directory for the build
+```
 
 ## How to build from command line
 
