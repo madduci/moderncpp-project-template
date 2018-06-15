@@ -1,6 +1,8 @@
-#include <iostream>
+#include "hellolib/hellolib.hpp"
+
+using namespace hello;
 
 int main() {
-  std::cout << "Hello Modern C++ Development\n";
-  return 0;
+  hellolib hello{};
+  return hello.saySomething("Hello Modern C++ Development");
 }

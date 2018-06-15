@@ -11,7 +11,9 @@ class ModernCppProject(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
-    requires = "doctest/1.2.6@bincrafters/stable"
+    no_copy_source=True
+    short_paths=True
+    build_requires = "doctest/1.2.6@bincrafters/stable"
     build_policy = "always" # update source code every time
     conanfile_dir = os.path.dirname(os.path.realpath(__file__))
     project_dir = os.path.join(conanfile_dir, "project")
@@ -25,12 +27,9 @@ class ModernCppProject(ConanFile):
             self.__clang_format()
 
     def configure(self):
-        '''Force libstdc++11 on gcc'''
-        if self.settings.compiler == "gcc" and self.settings.compiler.libcxx == "libstdc++":
+        '''Force libstdc++11 on gcc and clang'''
+        if self.settings.compiler == "gcc" or self.settings.compiler == "clang":
             self.settings.compiler.libcxx = "libstdc++11"
-        '''Force libc++ on clang'''
-        if self.settings.compiler == "clang":
-            self.settings.compiler.libcxx = "libc++"
 
     def build(self):
         '''Format files if clang-format is available
@@ -52,9 +51,7 @@ class ModernCppProject(ConanFile):
 
         cmake.build()
         cmake.test()
-
-        #TODO: Add Install target on CMake
-        #cmake.install()
+        cmake.install()
 
     def package(self):
         self.copy("*.h", dst="include", src="hello")
@@ -83,31 +80,38 @@ class ModernCppProject(ConanFile):
         '''Performs clang-check on compiled files'''
         files = self.__list_files(self.project_cpp_files_extensions)
         for file in files:
-            subprocess.Popen(['clang-check', '-analyze', "-p=%s" % self.build_dir, file], stdout=subprocess.PIPE)
+            subprocess.Popen(
+                ['clang-check', '-analyze', "-p=%s" % self.build_dir, file],
+                stderr=subprocess.PIPE
+            )
 
     def __clang_format(self):
         '''Performs clang-format on all C++ files'''
         files = self.__list_files(self.project_files_extensions)
         for file in files:
-            subprocess.Popen(['clang-format', '-style=file', '-i', file], stdout=subprocess.PIPE)
+            subprocess.Popen(
+                ['clang-format', '-style=file', '-i', file],
+                stderr=subprocess.PIPE
+            )
 
     def __cppcheck(self):
         '''Performs clang-format on all C++ files'''
         build_path = os.path.join(self.build_dir, 'compile_commands.json')
         xml_report = os.path.join(self.build_dir, 'cppcheck.xml')
         with open(xml_report, "w") as output_file:
-            subprocess.call(
+            subprocess.Popen(
                 [
                     'cppcheck',
                     '--enable=warning,performance,portability,information,missingInclude',
                     '--cppcheck-build-dir=%s' % self.build_dir,
                     '--project=%s' % build_path,
                     '-i',
-                    'include',
+                    self.deps_cpp_info.includedirs[0],
                     '--quiet',
-                    '--xml'
+                    '--xml',
+                    '--output-file=%s' % xml_report
                 ],
-                stdout=output_file,
-                stderr=output_file)
+                stderr=subprocess.PIPE
+            )
 
 
