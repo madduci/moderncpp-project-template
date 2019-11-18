@@ -13,7 +13,7 @@ class ModernCppProject(ConanFile):
     generators = "cmake"
     no_copy_source=True
     short_paths=True
-    build_requires = "doctest/1.2.6@bincrafters/stable"
+    build_requires = "doctest/2.3.4@bincrafters/stable"
     build_policy = "always" # update source code every time
     conanfile_dir = os.path.dirname(os.path.realpath(__file__))
     project_dir = os.path.join(conanfile_dir, "project")
@@ -55,7 +55,7 @@ class ModernCppProject(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", src="hello")
-        self.copy("*hello.lib", dst="lib", keep_path=False)
+        self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
         self.copy("*.dylib", dst="lib", keep_path=False)

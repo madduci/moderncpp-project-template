@@ -8,7 +8,7 @@ This repository aims to represent a template for Modern C++ projects, including 
 * [`cmake`](https://cmake.org) 3.9+
 * [`conan`](https://conan.io) 1.4+
 * `conan_package_tools` (optional)
-* `cppcheck` (optional) 1.80+
+* `cppcheck` (optional)
 * `clang-format` (optional)
 * `clang-check` (optional)
 
