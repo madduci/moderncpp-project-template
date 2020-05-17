@@ -2,10 +2,13 @@ import os
 
 from conans import ConanFile, CMake, tools
 
-class NtailTestConan(ConanFile):
+
+class ModerncpptemplateTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    requires = "doctest/1.2.6@bincrafters/stable"
+    requires = (
+        "doctest/2.3.7"
+    )
 
     def build(self):
         cmake = CMake(self)
@@ -20,5 +23,6 @@ class NtailTestConan(ConanFile):
         self.copy('*.so*', dst='bin', src='lib')
 
     def test(self):
-        if not tools.cross_building(self.settings):
-            self.run("ctest")
+        if not tools.cross_building(self):
+            os.chdir("bin")
+            self.run(".%susage_test" % os.sep)

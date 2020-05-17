@@ -5,7 +5,7 @@ This repository aims to represent a template for Modern C++ projects, including 
 ## Requirements
 
 * a modern C++17 compiler (`gcc-8`, `clang-6.0`, `MSVC 2017` or above)
-* [`cmake`](https://cmake.org) 3.9+
+* [`cmake`](https://cmake.org) 3.10+
 * [`conan`](https://conan.io) 1.4+
 * `conan_package_tools` (optional)
 * `cppcheck` (optional)

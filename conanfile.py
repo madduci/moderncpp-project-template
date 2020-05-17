@@ -11,16 +11,12 @@ class ModernCppProject(ConanFile):
     url = "https://gitlab.com/madduci/moderncpp-project-template"
     homepage = "https://madduci.netlify.app"
     license = "MIT"
-    exports_sources = ["project/*"]
+    exports_sources = ["CMakeLists.txt", "project/*"]
     generators = "cmake"
     short_paths = True
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
-
-    requires = (
-        "doctest/2.3.7"
-    )
 
     def config_options(self):
         if self.settings.os == 'Windows':
@@ -31,31 +27,16 @@ class ModernCppProject(ConanFile):
 
     def source(self):
         '''Format files if clang-format is available'''
-        #if tools.which('clang-format') is not None:
+       # if tools.which('clang-format') is not None:
           #  self.__clang_format()
 
-
     def build(self):
-        '''Format files if clang-format is available
-           Setup CMake project
-           Runs clang-check and cppcheck if available
+        '''Setup CMake project
            Builds the source files and runs the tests'''
-
-        #if tools.which('clang-format') is not None:
-           # self.__clang_format()
-
         cmake = CMake(self, set_cmake_flags=True)
-        cmake.configure(source_folder="project")
-
-       # if tools.which('clang-check') is not None:
-           # self.__clang_check()
-
-       # if tools.which('cppcheck') is not None:
-            #self.__cppcheck()
-
+        cmake.configure()
         cmake.build()
-        cmake.test()
-        #cmake.install()
+        cmake.install()
 
     def package(self):
         self.copy("*.h", dst="include", src="hello")
@@ -117,4 +98,3 @@ class ModernCppProject(ConanFile):
                 ],
                 stderr=subprocess.PIPE
             )
-

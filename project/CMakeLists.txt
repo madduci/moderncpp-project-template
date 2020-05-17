@@ -16,8 +16,6 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 # Define Conan Imports
 #####################################
 include(GenerateExportHeader)
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
 
 #####################################
 # Set compiler specific settings
@@ -84,7 +82,7 @@ else()
   endif()
 endif()
 
-target_link_libraries(hello hellolib ${CONAN_LIBS})
+target_link_libraries(hello hellolib)
 
 #####################################
 # Define Install Targets
@@ -98,20 +96,3 @@ install(TARGETS
   ARCHIVE DESTINATION lib
   PUBLIC_HEADER DESTINATION include
 )
-
-#####################################
-# Define Tests
-#####################################
-enable_testing()
-list(APPEND TEST_CASES
-  test_hello
-)
-
-foreach(TEST_CASE ${TEST_CASES})
-  add_executable(${TEST_CASE} tests/${TEST_CASE}.cpp)
-  target_link_libraries(${TEST_CASE} hellolib ${CONAN_LIBS})
-  target_compile_options(${TEST_CASE} PRIVATE ${compiler_flags})
-  add_test(NAME ${TEST_CASE}
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-    COMMAND ${TEST_CASE})
-endforeach(TEST_CASE ${TEST_CASES})
