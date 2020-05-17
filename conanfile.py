@@ -1,35 +1,39 @@
 from conans import ConanFile, CMake, tools
-import os, subprocess
+import os
+import subprocess
+
 
 class ModernCppProject(ConanFile):
     name = "moderncpp-project-template"
-    version = "0.1.0"
-    license = "MIT"
-    url = "https://gitlab.com/madduci/moderncpp-project-template"
+    version = "1.0.0"
     description = "Modern C++ Project Template"
-    settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    topics = ("conan", "cpp", "template")
+    url = "https://gitlab.com/madduci/moderncpp-project-template"
+    homepage = "https://madduci.netlify.app"
+    license = "MIT"
+    exports_sources = ["project/*"]
     generators = "cmake"
-    no_copy_source=True
-    short_paths=True
-    build_requires = "doctest/2.3.4@bincrafters/stable"
-    build_policy = "always" # update source code every time
-    conanfile_dir = os.path.dirname(os.path.realpath(__file__))
-    project_dir = os.path.join(conanfile_dir, "project")
-    project_files_extensions = ['.h', '.cpp', '.hpp', '.c', '.cc', '.hh', '.cxx', '.hxx']
-    project_cpp_files_extensions = ['.cpp', '.c', '.cc', '.cxx']
-    build_dir = os.path.join(conanfile_dir, 'build')
+    short_paths = True
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
+
+    requires = (
+        "doctest/2.3.7"
+    )
+
+    def config_options(self):
+        if self.settings.os == 'Windows':
+            del self.options.fPIC
+
+        if self.settings.compiler == "gcc" or self.settings.compiler == "clang":
+            self.settings.compiler.libcxx = "libstdc++11"
 
     def source(self):
         '''Format files if clang-format is available'''
-        if tools.which('clang-format') is not None:
-            self.__clang_format()
+        #if tools.which('clang-format') is not None:
+          #  self.__clang_format()
 
-    def configure(self):
-        '''Force libstdc++11 on gcc and clang'''
-        if self.settings.compiler == "gcc" or self.settings.compiler == "clang":
-            self.settings.compiler.libcxx = "libstdc++11"
 
     def build(self):
         '''Format files if clang-format is available
@@ -37,21 +41,21 @@ class ModernCppProject(ConanFile):
            Runs clang-check and cppcheck if available
            Builds the source files and runs the tests'''
 
-        if tools.which('clang-format') is not None:
-            self.__clang_format()
+        #if tools.which('clang-format') is not None:
+           # self.__clang_format()
 
         cmake = CMake(self, set_cmake_flags=True)
-        cmake.configure(source_dir=self.project_dir)
+        cmake.configure(source_folder="project")
 
-        if tools.which('clang-check') is not None:
-            self.__clang_check()
+       # if tools.which('clang-check') is not None:
+           # self.__clang_check()
 
-        if tools.which('cppcheck') is not None:
-            self.__cppcheck()
+       # if tools.which('cppcheck') is not None:
+            #self.__cppcheck()
 
         cmake.build()
         cmake.test()
-        cmake.install()
+        #cmake.install()
 
     def package(self):
         self.copy("*.h", dst="include", src="hello")
@@ -113,5 +117,4 @@ class ModernCppProject(ConanFile):
                 ],
                 stderr=subprocess.PIPE
             )
-
 

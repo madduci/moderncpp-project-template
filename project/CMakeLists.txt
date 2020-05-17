@@ -1,7 +1,7 @@
 #####################################
 # Define Project-Wide Settings
 #####################################
-cmake_minimum_required(VERSION 3.9.0)
+cmake_minimum_required(VERSION 3.10.0)
 project(moderncpp-project LANGUAGES CXX  VERSION 1.0.0 )
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,11 +22,21 @@ conan_basic_setup()
 #####################################
 # Set compiler specific settings
 #####################################
-if(MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX /GL /Yu")
-else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O2 -pipe -march=native -fasynchronous-unwind-tables -fexceptions -fstack-protector-all -Werror=format-security -Werror=implicit-function-declaration -Werror=unused-result")
-endif()
+
+list(APPEND compiler_flags
+  $<$<CXX_COMPILER_ID:MSVC>:/W4>
+  $<$<CXX_COMPILER_ID:MSVC>:/WX>
+  $<$<CXX_COMPILER_ID:MSVC>:/GL>
+  $<$<CXX_COMPILER_ID:MSVC>:/Yu>
+  $<$<CXX_COMPILER_ID:MSVC>:/O2>
+  $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:CLANG>>:-Wall>
+  $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:CLANG>>:-Wextra>
+  $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:CLANG>>:-Werror=format-security>
+  $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:CLANG>>:-Werror=unused-result>
+  $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:CLANG>>:-fasynchronous-unwind-tables>
+  $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:CLANG>>:-fexceptions>
+  $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:CLANG>>:-pipe>
+)
 
 #####################################
 # Define Targets
@@ -35,6 +45,7 @@ include_directories(src)
 
 set(PROJECT_TARGETS)
 add_executable(hello src/hello.cpp)
+target_compile_options(hello PRIVATE ${compiler_flags})
 # Build statically or dynamically?
 if(BUILD_SHARED_LIBS)
   add_library(hellolib SHARED src/hellolib/hellolib.cpp)
@@ -44,12 +55,11 @@ if(BUILD_SHARED_LIBS)
     PROPERTIES
       VERSION ${PROJECT_VERSION}
       PUBLIC_HEADER "src/hellolib/hellolib.hpp;${PROJECT_BINARY_DIR}/hellolib_export.h"
-      COMPILE_FLAGS "${CMAKE_CXX_FLAGS}"
       POSITION_INDEPENDENT_CODE ON
   )
+  target_compile_options(hellolib PRIVATE ${compiler_flags})
   set_target_properties(hello
     PROPERTIES
-      COMPILE_FLAGS "${CMAKE_CXX_FLAGS}"
       POSITION_INDEPENDENT_CODE ON
   )
   if(MSVC)
@@ -64,12 +74,8 @@ else()
     PROPERTIES
       COMPILE_DEFINITIONS HELLOLIB_STATIC_DEFINE
       PUBLIC_HEADER "src/hellolib/hellolib.hpp;${PROJECT_BINARY_DIR}/hellolib_export.h"
-      COMPILE_FLAGS "${CMAKE_CXX_FLAGS}"
   )
-  set_target_properties(hello
-    PROPERTIES
-      COMPILE_FLAGS "${CMAKE_CXX_FLAGS}"
-  )
+  target_compile_options(hellolib PRIVATE ${compiler_flags})
   if(MSVC)
     target_link_libraries(hellolib /MT)
     target_link_libraries(hello /MT)
@@ -104,6 +110,7 @@ list(APPEND TEST_CASES
 foreach(TEST_CASE ${TEST_CASES})
   add_executable(${TEST_CASE} tests/${TEST_CASE}.cpp)
   target_link_libraries(${TEST_CASE} hellolib ${CONAN_LIBS})
+  target_compile_options(${TEST_CASE} PRIVATE ${compiler_flags})
   add_test(NAME ${TEST_CASE}
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
     COMMAND ${TEST_CASE})
