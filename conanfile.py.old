@@ -11,7 +11,7 @@ class ModernCppProject(ConanFile):
     url = "https://gitlab.com/madduci/moderncpp-project-template"
     homepage = "https://madduci.netlify.app"
     license = "MIT"
-    exports_sources = ["CMakeLists.txt", "project/*"]
+    exports_sources = ["LICENSE", "project/*"]
     generators = "cmake"
     short_paths = True
     settings = "os", "arch", "compiler", "build_type"
@@ -33,7 +33,7 @@ class ModernCppProject(ConanFile):
     def build(self):
         '''Setup CMake project
            Builds the source files and runs the tests'''
-        cmake = CMake(self, set_cmake_flags=True)
+        cmake = CMake(self, set_cmake_flags=True, source_folder="project/")
         cmake.configure()
         cmake.build()
         cmake.install()
