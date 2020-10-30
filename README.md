@@ -7,7 +7,6 @@ This repository aims to represent a template for Modern C++ projects, including 
 * a modern C++17 compiler (`gcc-8`, `clang-6.0`, `MSVC 2017` or above)
 * [`cmake`](https://cmake.org) 3.10+
 * [`conan`](https://conan.io) 1.4+
-* `conan_package_tools` (optional)
 * `cppcheck` (optional)
 * `clang-format` (optional)
 * `clang-check` (optional)
@@ -17,22 +16,21 @@ This repository aims to represent a template for Modern C++ projects, including 
 The repository follows the required files and folders as suggested in `conan_package_tools` documentation, with a folder dedicated to the source code and another one dedicated to testing the package as redistributable library, in case you are developing a library:
 
 ```plain
--- conanfile.py      - the main `conan` configuration file
--- build.py          - python script to launch the `conan_package_tools` tests
--- .dockerignore     - files to be excluded by Docker
--- .gitignore        - files to be excluded by git
-+- `project/`        - the whole C++ project
-  | -- .clang-format - the formatter rules for the C++ project
+-- conanfile.txt                - the main `conan` configuration file listing dependencies
+-- CMakeLists.txt               - the main `CMake` Project configuration file
+-- .dockerignore                - files to be excluded by Docker
+-- .gitignore                   - files to be excluded by git
++- `cmake/`                     - CMake modules
+  | -- clang-format.cmake       - CMake target definitions for clang-format
+  | -- compiler-options.cmake   - Common compiler options for major platforms/compilers
+  | -- cpack.cmake              - Packaging configuration with CPack
+  | -- dependencies.cmake       - Project dependencies, CMake-Style
++- `project/`                   - the whole C++ project
+  | -- .clang-format            - the formatter rules for the C++ project
   | -- CMakeLists.txt
-  | +- `src/`        - your source files
-  |    -- hello.cpp
-  | +- `tests/`      - your unit tests
-  |   -- test_hello.cpp
-+- `test_package/`   - integration or usage example
-  | -- CMakeLists.txt
-  | -- conanfile.py
-  | -- usage_hello.cpp
-+- `build/`          - working directory for the build
+  | +- `helloapp/`              - your application files (including CMakeLists.txt, sources)
+  | +- `hellolib/`              - your library files (including CMakeLists.txt, sources
++- `build/`                     - working directory for the build
 ```
 
 ## How to build from command line
@@ -44,9 +42,15 @@ cd /path/to/this/project
 mkdir -p build # md build (on Windows)
 cd build
 conan install ..
-conan build ..
+cmake -DBUILD_TESTING=TRUE ..
 ```
 
 ## How to build the project using a Docker Environment
 
-`docker run --rm -it -v $(pwd):/project madduci/docker-cpp-env:latest "mkdir -p build && cd build && conan install .. && conan build .."`
+### Linux/gcc
+
+`docker run --rm -it -v $(pwd):/project madduci/docker-cpp-env:latest "mkdir -p build && cd build && conan install .. && cmake -DBUILD_TESTING=TRUE  .."`
+
+### Windows/msvc
+
+`docker run --rm -it -v $(pwd):/project madduci/docker-wine-msvc:16.7-2019 ""md build && cd build && conan install .. && cmake -G "Ninja" -DBUILD_TESTING=TRUE  ..""`
