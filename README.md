@@ -53,4 +53,13 @@ cmake -DBUILD_TESTING=TRUE ..
 
 ### Windows/msvc
 
-`docker run --rm -it -v $(pwd):/project madduci/docker-wine-msvc:16.7-2019 ""md build && cd build && conan install .. && cmake -G "Ninja" -DBUILD_TESTING=TRUE  ..""`
+`docker run --rm -it -v $(pwd):/home/wine/.wine/drive_c/project madduci/docker-wine-msvc:16.7-2019`
+
+and then:
+
+```
+md project/build
+cd project/build
+conan install .. cmake -DBUILD_TESTING=TRUE  ..
+cmake --build .
+```
