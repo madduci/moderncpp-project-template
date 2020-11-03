@@ -1,10 +1,8 @@
 #include "hellolib.h"
-
 #include <iostream>
 
 #ifdef WITH_OPENSSL
 #include <openssl/sha.h>
-
 #include <array>
 #include <iomanip>
 #include <sstream>
@@ -42,7 +40,7 @@ int32_t hellolib::saySomethingHashed(
     return 3;
   }
 
-  std::array<u_int8_t, 32> buffer{};
+  std::array<unsigned char, 32> buffer{};
   if (!SHA256_Final(buffer.data(), &context)) {
     std::cerr << "Failed to finalize hash result\n";
     return 4;
