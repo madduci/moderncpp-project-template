@@ -1,5 +1,9 @@
 # moderncpp-project-template
 
+![Static Build](https://github.com/madduci/moderncpp-project-template/workflows/Build-Static/badge.svg)
+
+![Shared Build](https://github.com/madduci/moderncpp-project-template/workflows/Build-Shared/badge.svg)
+
 This repository aims to represent a template for Modern C++ projects, including static analysis checks, autoformatting, a BDD/TDD capable test-suite and packaging
 
 ## Requirements
