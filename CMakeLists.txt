@@ -37,6 +37,7 @@ include(GenerateExportHeader)
 include(${CMAKE_SOURCE_DIR}/cmake/clang_format.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/compiler_options.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/cpack.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/cppcheck.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/dependencies.cmake)
 
 #####################################

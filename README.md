@@ -13,7 +13,6 @@ This repository aims to represent a template for Modern C++ projects, including 
 * [`conan`](https://conan.io) 1.4+
 * `cppcheck` (optional)
 * `clang-format` (optional)
-* `clang-check` (optional)
 
 ## Repository layout
 
@@ -21,6 +20,7 @@ The repository follows the required files and folders as suggested in `conan_pac
 
 ```plain
 -- conanfile.txt                - the main `conan` configuration file listing dependencies
+-- cppcheck_suppressions.txt    - optional list of suppressions for cppcheck
 -- CMakeLists.txt               - the main `CMake` Project configuration file
 -- .dockerignore                - files to be excluded by Docker
 -- .gitignore                   - files to be excluded by git
