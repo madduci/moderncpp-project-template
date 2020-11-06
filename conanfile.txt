@@ -1,0 +1,9 @@
+[requires]
+openssl/1.1.1h
+doctest/2.4.0
+
+[generators]
+cmake_find_package
+
+[options]
+openssl:shared=False
