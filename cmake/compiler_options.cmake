@@ -32,10 +32,7 @@ else(MSVC)
       -Wextra
       -Wpedantic
       $<$<CONFIG:RELEASE>:-O2>
-      $<$<CONFIG:DEBUG>:-O0>
-      $<$<CONFIG:DEBUG>:-g>
-      $<$<CONFIG:DEBUG>:-p>
-      $<$<CONFIG:DEBUG>:-pg>)
+      $<$<CONFIG:DEBUG>:-O0 -g -p -pg>)
 
   list(APPEND compiler_definitions
    $<$<OR:$<CONFIG:RELEASE>,$<CONFIG:MINSIZEREL>>:_FORTIFY_SOURCE=2>
