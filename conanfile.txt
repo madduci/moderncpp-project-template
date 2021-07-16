@@ -1,6 +1,6 @@
 [requires]
 openssl/1.1.1k
-doctest/2.4.4
+doctest/2.4.6
 
 [generators]
 cmake_find_package
