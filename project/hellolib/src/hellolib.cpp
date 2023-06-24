@@ -3,7 +3,7 @@
 #include <iostream>
 
 #ifdef WITH_OPENSSL
-#include <openssl/sha.h>
+#include <openssl/evp.h>
 
 #include <array>
 #include <iomanip>
@@ -30,22 +30,26 @@ int32_t hellolib::saySomethingHashed(
     return 1;
   }
 
-  SHA256_CTX context;
-  if (!SHA256_Init(&context)) {
-    std::cerr << "Failed to initialize context\n";
+  EVP_MD_CTX *context = EVP_MD_CTX_new(); 
+  if(context == NULL) {
+    std::cerr << "Failed to create context\n";
     return 2;
   }
 
-  if (!SHA256_Update(&context, (unsigned char *)something.c_str(),
-                     something.size())) {
-    std::cerr << "Failed to create hash value\n";
+  if(1 != EVP_DigestInit_ex(context, EVP_sha256(), NULL)) {
+    std::cerr << "Failed to initialize context\n";
     return 3;
   }
 
-  std::array<unsigned char, 32> buffer{};
-  if (!SHA256_Final(buffer.data(), &context)) {
-    std::cerr << "Failed to finalize hash result\n";
+  if(1 != EVP_DigestUpdate(context, (unsigned char *)something.c_str(), something.size())) {
+    std::cerr << "Failed to create hash value\n";
     return 4;
+  }
+
+  std::array<unsigned char, 32> buffer{};
+  if(1 != EVP_DigestFinal_ex(context, buffer.data(), NULL)) {
+    std::cerr << "Failed to finalize hash result\n";
+    return 5;
   }
 
   // Transform byte-array to string
