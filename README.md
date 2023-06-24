@@ -62,8 +62,8 @@ The project can be built using the following commands:
 cd /path/to/this/project
 mkdir -p build # md build (on Windows)
 cd build
-conan install ..
-cmake -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=TRUE ..
+conan install . --output-folder=. --build=missing
+cmake -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 cmake --build . --target format
 cmake --build . --target package

@@ -44,7 +44,7 @@ jobs:
         run: |
             conan profile update settings.compiler.libcxx=libc++ default
             mkdir -p build && cd build
-            conan install .. --build=missing
+            conan install . --output-folder=. --build=missing
             cmake .. -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=FALSE -DCMAKE_BUILD_TYPE=Release
             cmake --build . --config Release --target install
             
@@ -52,6 +52,6 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
             md build && cd build
-            conan install .. --build=missing
+            conan install . --output-folder=. --build=missing
             cmake .. -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=FALSE -DCMAKE_BUILD_TYPE=Release
             cmake --build . --config Release --target install
