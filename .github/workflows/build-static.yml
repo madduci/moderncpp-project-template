@@ -35,7 +35,7 @@ jobs:
         run: |
             conan profile update settings.compiler.libcxx=libstdc++11 default
             mkdir -p build && cd build
-            conan install .. --build=missing
+            conan install . --output-folder=. --build=missing
             cmake .. -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=FALSE -DCMAKE_BUILD_TYPE=Release
             cmake --build . --config Release --target install
             
