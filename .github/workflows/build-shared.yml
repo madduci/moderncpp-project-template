@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
@@ -20,10 +20,12 @@ jobs:
       
     steps:
       - name: Perform checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Install Python environment 
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
         
       - name: Install conan
         run: |
