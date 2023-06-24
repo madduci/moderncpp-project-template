@@ -9,8 +9,8 @@ This repository aims to represent a template for Modern C++ projects, including 
 ## Requirements
 
 * a modern C++17 compiler (`gcc-8`, `clang-6.0`, `MSVC 2017` or above)
-* [`cmake`](https://cmake.org) 3.10+
-* [`conan`](https://conan.io) 1.28+ (optional)
+* [`cmake`](https://cmake.org) 3.15+
+* [`conan`](https://conan.io) 2.0+ (optional)
 * `cppcheck` (optional)
 * `clang-format` (optional)
 
@@ -62,7 +62,7 @@ The project can be built using the following commands:
 cd /path/to/this/project
 mkdir -p build # md build (on Windows)
 cd build
-conan install . --output-folder=. --build=missing
+conan install .. --output-folder=. --build=missing
 cmake -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 cmake --build . --target format
