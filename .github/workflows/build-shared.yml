@@ -33,7 +33,7 @@ jobs:
       - name: Linux build
         if: matrix.os == 'ubuntu-20.04'
         run: |
-            conan profile update settings.compiler.libcxx=libstdc++11 default
+            conan profile detect --force
             mkdir -p build && cd build
             conan install . --output-folder=. --build=missing
             cmake .. -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=Release
@@ -42,7 +42,7 @@ jobs:
       - name: Mac build
         if: matrix.os == 'macos-latest'
         run: |
-            conan profile update settings.compiler.libcxx=libc++ default
+            conan profile detect --force
             mkdir -p build && cd build
             conan install . --output-folder=. --build=missing
             cmake .. -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=Release
@@ -51,6 +51,7 @@ jobs:
       - name: Windows build
         if: matrix.os == 'windows-latest'
         run: |
+            conan profile detect --force
             md build && cd build
             conan install . --output-folder=. --build=missing
             cmake .. -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=Release
