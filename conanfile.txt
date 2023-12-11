@@ -1,5 +1,5 @@
 [requires]
-openssl/3.1.1
+openssl/3.2.0
 doctest/2.4.11
 
 [generators]
