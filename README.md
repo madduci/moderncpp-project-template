@@ -77,14 +77,14 @@ cmake --build . --target package
 
 ### Windows/msvc
 
-`docker run --rm -it -v $(pwd):/home/wine/.wine/drive_c/project madduci/docker-wine-msvc:16.11-2019`
+`docker run --rm -it -v $(pwd):/home/wine/.wine/drive_c/project madduci/docker-wine-msvc:17.8-2022`
 
 and then:
 
 ```
 md project/build
 cd project/build
-conan install .. 
+conan install --output-folder .  .. 
 cmake -G "Ninja" -DBUILD_TESTING=TRUE  ..
 cmake --build .
 ```
