@@ -3,4 +3,4 @@ Language:        Cpp
 BasedOnStyle:    Google
 ColumnLimit:     80
 IndentWidth:     2
-Standard:        Cpp11
+Standard:        c++17

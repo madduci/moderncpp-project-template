@@ -30,24 +30,25 @@ int32_t hellolib::saySomethingHashed(
     return 1;
   }
 
-  EVP_MD_CTX *context = EVP_MD_CTX_new(); 
-  if(context == NULL) {
+  EVP_MD_CTX *context = EVP_MD_CTX_new();
+  if (context == NULL) {
     std::cerr << "Failed to create context\n";
     return 2;
   }
 
-  if(1 != EVP_DigestInit_ex(context, EVP_sha256(), NULL)) {
+  if (1 != EVP_DigestInit_ex(context, EVP_sha256(), NULL)) {
     std::cerr << "Failed to initialize context\n";
     return 3;
   }
 
-  if(1 != EVP_DigestUpdate(context, (unsigned char *)something.c_str(), something.size())) {
+  if (1 != EVP_DigestUpdate(context, (unsigned char *)something.c_str(),
+                            something.size())) {
     std::cerr << "Failed to create hash value\n";
     return 4;
   }
 
   std::array<unsigned char, 32> buffer{};
-  if(1 != EVP_DigestFinal_ex(context, buffer.data(), NULL)) {
+  if (1 != EVP_DigestFinal_ex(context, buffer.data(), NULL)) {
     std::cerr << "Failed to finalize hash result\n";
     return 5;
   }
