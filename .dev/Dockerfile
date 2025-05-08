@@ -1,8 +1,8 @@
 FROM ubuntu:24.04
 
 # Define Conan and CMake versions
-ARG CONAN_VERSION=2.6.0
-ARG CMAKE_VERSION=3.30.1
+ARG CONAN_VERSION=2.16.1
+ARG CMAKE_VERSION=4.0.2
 
 # Define User ID and Group ID
 ARG USER_ID=1000
@@ -11,7 +11,7 @@ ARG GROUP_ID=1000
 WORKDIR /project
 
 # Define Labels
-LABEL maintainer="Michele Adduci <adduci@tutanota.com>" \
+LABEL maintainer="Michele Adduci <michele@adduci.org>" \
       description="Docker image for C++ development with Conan and CMake" \
       cmake.version="${CMAKE_VERSION}" \
       conan.version="${CONAN_VERSION}" 

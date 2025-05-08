@@ -1,5 +1,5 @@
 # MIT License 
-# Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
+# Copyright (c) 2018-Today Michele Adduci <michele@adduci.org>
 #
 # helloapp target instructions
 

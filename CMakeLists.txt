@@ -1,5 +1,5 @@
 # MIT License 
-# Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
+# Copyright (c) 2018-Today Michele Adduci <michele@adduci.org>
 #
 # Main CMake Project file
 
@@ -17,12 +17,12 @@ project(moderncpp-project LANGUAGES CXX DESCRIPTION "moderncpp-project is a star
 
 # Set Project version (used for library versioning and for CPack)
 set(CMAKE_PROJECT_VERSION_MAJOR 1)
-set(CMAKE_PROJECT_VERSION_MINOR 1)
-set(CMAKE_PROJECT_VERSION_PATCH 2)
+set(CMAKE_PROJECT_VERSION_MINOR 2)
+set(CMAKE_PROJECT_VERSION_PATCH 0)
 set(CMAKE_PROJECT_VERSION ${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH})
 
 # Set required C++ Standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 # Generate the compile_commands.json file
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
