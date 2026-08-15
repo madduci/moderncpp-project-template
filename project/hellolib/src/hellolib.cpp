@@ -12,7 +12,7 @@
 
 using namespace hello;
 
-int32_t hellolib::saySomething(const std::string &something) const noexcept {
+int32_t hellolib::saySomething(const std::string& something) const noexcept {
   if (something.empty()) {
     std::cerr << "No value passed\n";
     return 1;
@@ -24,13 +24,13 @@ int32_t hellolib::saySomething(const std::string &something) const noexcept {
 
 #ifdef WITH_OPENSSL
 int32_t hellolib::saySomethingHashed(
-    const std::string &something) const noexcept {
+    const std::string& something) const noexcept {
   if (something.empty()) {
     std::cerr << "No value passed\n";
     return 1;
   }
 
-  EVP_MD_CTX *context = EVP_MD_CTX_new();
+  EVP_MD_CTX* context = EVP_MD_CTX_new();
   if (context == NULL) {
     std::cerr << "Failed to create context\n";
     return 2;
@@ -41,7 +41,7 @@ int32_t hellolib::saySomethingHashed(
     return 3;
   }
 
-  if (1 != EVP_DigestUpdate(context, (unsigned char *)something.c_str(),
+  if (1 != EVP_DigestUpdate(context, (unsigned char*)something.c_str(),
                             something.size())) {
     std::cerr << "Failed to create hash value\n";
     return 4;
@@ -56,7 +56,7 @@ int32_t hellolib::saySomethingHashed(
   // Transform byte-array to string
   std::stringstream shastr;
   shastr << std::hex << std::setfill('0');
-  for (const auto &byte : buffer) {
+  for (const auto& byte : buffer) {
     shastr << std::setw(2) << (int)byte;
   }
 

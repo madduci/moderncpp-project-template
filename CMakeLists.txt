@@ -6,7 +6,7 @@
 #####################################
 # Define Project-Wide Settings
 #####################################
-cmake_minimum_required(VERSION 3.15.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 4.0.0 FATAL_ERROR)
 
 # Enables the Visibility Property on all target types
 cmake_policy(SET CMP0063 NEW)
@@ -17,8 +17,8 @@ project(moderncpp-project LANGUAGES CXX DESCRIPTION "moderncpp-project is a star
 
 # Set Project version (used for library versioning and for CPack)
 set(CMAKE_PROJECT_VERSION_MAJOR 1)
-set(CMAKE_PROJECT_VERSION_MINOR 2)
-set(CMAKE_PROJECT_VERSION_PATCH 2)
+set(CMAKE_PROJECT_VERSION_MINOR 3)
+set(CMAKE_PROJECT_VERSION_PATCH 0)
 set(CMAKE_PROJECT_VERSION ${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH})
 
 # Set required C++ Standard

@@ -8,8 +8,8 @@ This repository aims to represent a template for Modern C++ projects, including 
 
 ## Requirements
 
-* a modern C++17 compiler (`gcc-8`, `clang-6.0`, `MSVC 2017` or above)
-* [`cmake`](https://cmake.org) 3.15+
+* a modern C++20 compiler (`gcc-11`, `clang-17.0`, `MSVC 2022` or above)
+* [`cmake`](https://cmake.org) 4.0+
 * [`conan`](https://conan.io) 2.0+ (optional)
 * `cppcheck` (optional)
 * `clang-format` (optional)
@@ -74,17 +74,3 @@ cmake --build . --target package
 ### Linux/gcc
 
 `docker run --rm -it -v $(pwd):/project madduci/docker-cpp-env:latest "mkdir -p build && cd build && conan install .. && cmake -DBUILD_TESTING=TRUE -DBUILD_SHARED_LIBS=TRUE .. && cmake --build ."`
-
-### Windows/msvc
-
-`docker run --rm -it -v $(pwd):/home/wine/.wine/drive_c/project madduci/docker-wine-msvc:17.8-2022`
-
-and then:
-
-```
-md project/build
-cd project/build
-conan install --output-folder .  .. 
-cmake -G "Ninja" -DBUILD_TESTING=TRUE  ..
-cmake --build .
-```
