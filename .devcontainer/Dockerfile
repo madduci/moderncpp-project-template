@@ -1,8 +1,8 @@
-FROM ubuntu:24.04
+FROM mcr.microsoft.com/devcontainers/base:resolute
 
 # Define Conan and CMake versions
-ARG CONAN_VERSION=2.16.1
-ARG CMAKE_VERSION=4.0.2
+ARG CONAN_VERSION=2.31.2
+ARG CMAKE_VERSION=4.4.2
 
 # Define User ID and Group ID
 ARG USER_ID=1000
