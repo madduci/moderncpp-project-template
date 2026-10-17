@@ -34,6 +34,7 @@ jobs:
       - name: Install conan
         run: |
             pip install conan --upgrade
+            pip install cmake==4.4.2
             conan profile detect --force
                     
       - name: Linux build
