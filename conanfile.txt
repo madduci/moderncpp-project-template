@@ -1,6 +1,6 @@
 [requires]
-openssl/4.0.1
-doctest/2.5.2
+openssl/4.0.3
+doctest/2.5.3
 
 [generators]
 CMakeDeps
