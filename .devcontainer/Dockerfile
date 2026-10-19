@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/base:resolute
 
 # Define Conan and CMake versions
-ARG CONAN_VERSION=2.31.2
+ARG CONAN_VERSION=2.33.0
 ARG CMAKE_VERSION=4.4.2
 
 # Define User ID and Group ID

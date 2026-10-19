@@ -31,10 +31,9 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
         
-      - name: Install conan
+      - name: Install packages
         run: |
-            pip install conan --upgrade
-            pip install cmake==4.4.2
+            pip install -r requirements.txt
             conan profile detect --force
                     
       - name: Linux build
